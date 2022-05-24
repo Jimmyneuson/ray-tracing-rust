@@ -13,7 +13,7 @@ fn main() {
     bar.set_style(ProgressStyle::default_bar()
         .template("LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}"));
 
-    let mut ppm = PPM::new(WIDTH, HEIGHT);    
+    let mut ppm = PPM::new(WIDTH, HEIGHT);
     
     for j in (0..HEIGHT).rev() {
         for i in 0..WIDTH {

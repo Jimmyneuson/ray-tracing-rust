@@ -73,3 +73,42 @@ impl std::fmt::Debug for RGBTriplet {
         write!(f, "{} {} {}", self.r, self.g, self.b)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::read_to_string;
+
+    #[test]
+    fn gradient() {
+        let mut ppm = PPM::new(256, 256);    
+        let mut cmp = read_to_string("./tests/gradient.ppm").unwrap();
+        cmp.pop();
+
+        for j in (0..256).rev() {
+            for i in 0..256 {
+                ppm.set(i, 256 - j - 1, RGBTriplet::new(
+                    ((i as f64 / 255.0) * 255.999) as u8,
+                    ((j as f64 / 255.0) * 255.999) as u8,
+                    (0.25 * 255.999) as u8,
+                ));
+            }
+        }
+
+        assert_eq!(format!("{:?}", ppm), cmp);
+    }
+
+    #[test]
+    fn three_by_two() {
+        let mut ppm = PPM::new(3, 2);
+        let mut cmp = read_to_string("./tests/three_by_two.ppm").unwrap();
+        ppm.set(0, 0, RGBTriplet::new(255, 0, 0));
+        ppm.set(1, 0, RGBTriplet::new(0, 255, 0));
+        ppm.set(2, 0, RGBTriplet::new(0, 0, 255));
+        ppm.set(0, 1, RGBTriplet::new(255, 255, 0));
+        ppm.set(1, 1, RGBTriplet::new(255, 255, 255));
+        ppm.set(2, 1, RGBTriplet::new(0, 0, 0));
+
+        assert_eq!(format!("{:?}", ppm), cmp);
+    }
+}
