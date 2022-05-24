@@ -12,7 +12,7 @@ impl PPM {
         Self {
             columns,
             rows,
-            pixels: [RGBTriplet::default()].repeat(columns * rows),
+            pixels: vec![RGBTriplet::default(); columns * rows],
         }
     }
     
