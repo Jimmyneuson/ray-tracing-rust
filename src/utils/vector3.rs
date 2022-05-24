@@ -63,6 +63,18 @@ impl ops::Add for Vector3 {
     }
 }
 
+impl ops::Sub for Vector3 {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self {
+            x: self.x - other.x,
+            y: self.y - other.y,
+            z: self.z - other.z,
+        }
+    }
+}
+
 impl ops::Mul<f64> for Vector3 {
     type Output = Self;
     
@@ -185,10 +197,18 @@ mod tests {
     }
 
     #[test]
-    fn vector_lerp() {
+    fn vector_lerp_half() {
         let v1 = Vector3::new(0.0, 0.0, 0.0);
         let v2 = Vector3::new(1.0, 1.0, 1.0);
         assert_eq!(Vector3::lerp(&v1, &v2, 0.5), 
                    Vector3::new(0.5, 0.5, 0.5));
+    }
+
+    #[test]
+    fn vector_lerp_three_quarters() {
+        let v1 = Vector3::new(0.0, 0.0, 0.0);
+        let v2 = Vector3::new(1.0, 1.0, 1.0);
+        assert_eq!(Vector3::lerp(&v1, &v2, 0.75), 
+                   Vector3::new(0.75, 0.75, 0.75));
     }
 }

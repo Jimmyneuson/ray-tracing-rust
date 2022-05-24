@@ -1,17 +1,17 @@
 use super::vector3::Vector3;
 use super::ppm::RGBTriplet;
 
-struct Ray {
+pub struct Ray {
     pub origin: Vector3,
     pub direction: Vector3,
 }
 
 impl Ray {
-    fn new(origin: Vector3, direction: Vector3) -> Self {
+    pub fn new(origin: Vector3, direction: Vector3) -> Self {
         Self { origin, direction }
     }
 
-    fn at(&self, t: f64) -> Vector3 {
+    pub fn at(&self, t: f64) -> Vector3 {
         self.origin + t * self.direction
     }
 }
