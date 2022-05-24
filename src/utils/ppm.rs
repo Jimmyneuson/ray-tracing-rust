@@ -83,7 +83,6 @@ mod tests {
     fn gradient() {
         let mut ppm = PPM::new(256, 256);    
         let mut cmp = read_to_string("./tests/gradient.ppm").unwrap();
-        cmp.pop();
 
         for j in (0..256).rev() {
             for i in 0..256 {
