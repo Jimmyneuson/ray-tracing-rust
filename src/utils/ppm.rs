@@ -1,3 +1,5 @@
+use itertools::iproduct;
+
 pub struct PPM {
     columns: usize,
     rows: usize,
@@ -84,14 +86,12 @@ mod tests {
         let mut ppm = PPM::new(256, 256);    
         let mut cmp = read_to_string("./tests/gradient.ppm").unwrap();
 
-        for j in (0..256).rev() {
-            for i in 0..256 {
+        for (j, i) in iproduct!((0..256).rev(), 0..256) {
                 ppm.set(i, 256 - j - 1, RGBTriplet::new(
                     ((i as f64 / 255.0) * 255.999) as u8,
                     ((j as f64 / 255.0) * 255.999) as u8,
                     (0.25 * 255.999) as u8,
                 ));
-            }
         }
 
         assert_eq!(format!("{:?}", ppm), cmp);
