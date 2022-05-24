@@ -1,7 +1,7 @@
 use std::ops;
 
 #[derive(PartialEq, Clone, Copy)]
-struct Vector3 {
+pub struct Vector3 {
     pub x: f64,
     pub y: f64,
     pub z: f64,
@@ -32,6 +32,10 @@ impl Vector3 {
     
     pub fn unit(&mut self) -> Self {
         *self / self.magnitude()
+    }
+
+    pub fn lerp(left: &Vector3, right: &Vector3, t: f64) -> Self {
+        (1.0 - t) * *left + t * *right
     }
 }
 
@@ -68,6 +72,18 @@ impl ops::Mul<f64> for Vector3 {
             y: self.y * scalar,
             z: self.z * scalar,
         }  
+    }
+}
+
+impl ops::Mul<Vector3> for f64 {
+    type Output = Vector3;
+
+    fn mul(self, vector: Vector3) -> Vector3 {
+        Vector3::new(
+            vector.x * self,
+            vector.y * self,
+            vector.z * self,
+        )
     }
 }
 
@@ -111,6 +127,13 @@ mod tests {
         let v = Vector3::new(1.0, 2.0, 3.0);
         let s = 2.0;
         assert_eq!(v * s, Vector3::new(2.0, 4.0, 6.0));
+    }
+
+    #[test]
+    fn vector_mul_scalar() {
+        let v = Vector3::new(1.0, 2.0, 3.0);
+        let s = 2.0;
+        assert_eq!(s * v, Vector3::new(2.0, 4.0, 6.0));
     }
 
     #[test]
@@ -159,5 +182,13 @@ mod tests {
     fn unit_vector_length_is_one() {
         let mut v = Vector3::new(1.0, 2.0, 3.0); 
         assert_eq!(v.unit().magnitude(), 1.0);
+    }
+
+    #[test]
+    fn vector_lerp() {
+        let v1 = Vector3::new(0.0, 0.0, 0.0);
+        let v2 = Vector3::new(1.0, 1.0, 1.0);
+        assert_eq!(Vector3::lerp(&v1, &v2, 0.5), 
+                   Vector3::new(0.5, 0.5, 0.5));
     }
 }
