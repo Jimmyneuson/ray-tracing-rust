@@ -37,6 +37,14 @@ impl Vector3 {
     pub fn lerp(left: &Vector3, right: &Vector3, t: f64) -> Self {
         (1.0 - t) * *left + t * *right
     }
+    
+    pub fn color(&self) -> Self {
+        Self {
+            x: 255.999 * self.x,
+            y: 255.999 * self.y,
+            z: 255.999 * self.z,
+        } 
+    }
 }
 
 impl ops::Neg for Vector3 {
