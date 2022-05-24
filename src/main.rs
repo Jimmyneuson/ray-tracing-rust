@@ -18,12 +18,12 @@ fn main() {
     for j in (0..HEIGHT).rev() {
         for i in 0..WIDTH {
             bar.inc(1);
-
-            let r = ((i as f64 / 255.0) * 255.999) as u8;
-            let g = ((j as f64 / 255.0) * 255.999) as u8;
-            let b = (0.25 * 255.999) as u8;
             
-            ppm.set(i, HEIGHT - j - 1, RGBTriplet::new(r, g, b));
+            ppm.set(i, HEIGHT - j - 1, RGBTriplet::new(
+                    ((i as f64 / 255.0) * 255.999) as u8, 
+                    ((j as f64 / 255.0) * 255.999) as u8, 
+                    (0.25 * 255.999) as u8,
+            ));
         }
     }
     bar.finish();
