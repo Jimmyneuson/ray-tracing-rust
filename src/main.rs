@@ -4,12 +4,12 @@ use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
 use indicatif::ProgressBar;
 
-const WIDTH: usize = 256;
-const HEIGHT: usize = 256;
+const WIDTH: u64 = 256;
+const HEIGHT: u64 = 256;
 
 fn main() {
-    let bar = ProgressBar::new((WIDTH * HEIGHT) as u64);
-    bar.set_draw_delta(((WIDTH * HEIGHT) / 100) as u64);
+    let bar = ProgressBar::new(WIDTH * HEIGHT);
+    bar.set_draw_delta((WIDTH * HEIGHT) / 100);
     bar.set_style(ProgressStyle::default_bar()
         .template("LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}"));
 

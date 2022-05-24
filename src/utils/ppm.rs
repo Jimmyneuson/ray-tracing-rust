@@ -5,7 +5,10 @@ pub struct PPM {
 }
 
 impl PPM {
-    pub fn new(columns: usize, rows: usize) -> Self {
+    pub fn new(columns: u64, rows: u64) -> Self {
+        let columns = columns as usize;
+        let rows = rows as usize;
+
         Self {
             columns,
             rows,
@@ -13,14 +16,16 @@ impl PPM {
         }
     }
     
-    pub fn set(&mut self, column: usize, row: usize, new: RGBTriplet) -> RGBTriplet {
+    pub fn set(&mut self, column: u64, row: u64, new: RGBTriplet) -> RGBTriplet {
+        let column = column as usize;
+        let row = row as usize;
+
         self.pixels[self.columns * row + column] = new;
         new
     }
 
     pub fn get(&self, column: usize, row: usize) -> Option<&RGBTriplet> {
-        let index = self.columns * row + column;
-        self.pixels.get(index)
+        self.pixels.get(self.columns * row + column)
     }
 }
 
