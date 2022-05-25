@@ -41,6 +41,12 @@ impl std::fmt::Debug for PPM {
     } 
 }
 
+impl ToString for PPM {
+    fn to_string(&self) -> String {
+        format!("{:?}", self)
+    }
+}
+
 #[derive(Copy, Clone)]
 pub struct RGBTriplet {
     r: u8,
@@ -94,7 +100,7 @@ mod tests {
                 ));
         }
 
-        assert_eq!(format!("{:?}", ppm), cmp);
+        assert_eq!(ppm.to_string(), cmp);
     }
 
     #[test]
@@ -109,6 +115,6 @@ mod tests {
         ppm.set(1, 1, RGBTriplet::new(255, 255, 255));
         ppm.set(2, 1, RGBTriplet::new(0, 0, 0));
 
-        assert_eq!(format!("{:?}", ppm), cmp);
+        assert_eq!(ppm.to_string(), cmp);
     }
 }

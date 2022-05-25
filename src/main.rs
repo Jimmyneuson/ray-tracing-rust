@@ -1,4 +1,5 @@
 use ray_tracing::utils;
+
 use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
 use utils::vector3::Vector3;
