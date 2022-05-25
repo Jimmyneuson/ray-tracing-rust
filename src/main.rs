@@ -5,6 +5,7 @@ use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
 use utils::vector3::Vector3;
 use utils::ray::Ray;
+use utils::camera::Camera;
 
 use indicatif::ProgressStyle;
 use indicatif::ProgressBar;
@@ -32,24 +33,21 @@ fn main() {
     let mut ppm = PPM::new(image_width, image_height);
 
     // Camera
-    let viewport_height = 2.0;
-    let viewport_width = aspect_ratio * viewport_height;
-    let focal_length = 1.0;
+    let camera = Camera::new(2.0, aspect_ratio * 2.0, 1.0, Vector3::new(0.0, 0.0, 0.0));
 
-    let origin = Vector3::new(0.0, 0.0, 0.0);
-    let horizontal = Vector3::new(viewport_width, 0.0, 0.0);
-    let vertical = Vector3::new(0.0, viewport_height, 0.0);
-    let lower_left_corner = origin - horizontal/2.0 - vertical/2.0 -
-                            Vector3::new(0.0, 0.0, focal_length);
+    let lower_left_corner = camera.position
+                          - camera.horizontal/2.0 
+                          - camera.vertical/2.0 
+                          - Vector3::new(0.0, 0.0, camera.focal_length);
     
     for (j, i) in iproduct!((0..image_height).rev(), 0..image_width) {
         bar.inc(1);
         
         let u = i as f64 / (image_width - 1) as f64;
         let v = j as f64 / (image_height - 1) as f64;
-        let r = Ray::new(origin, lower_left_corner +
-                                 u*horizontal + v*vertical
-                                 - origin);
+        let r = Ray::new(camera.position, lower_left_corner +
+                                 u*camera.horizontal + v*camera.vertical
+                                 - camera.position);
         
         ppm.set(i, image_height - j - 1, ray_color(r));
     }
