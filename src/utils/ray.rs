@@ -1,5 +1,4 @@
 use super::vector3::Vector3;
-use super::ppm::RGBTriplet;
 
 pub struct Ray {
     pub origin: Vector3,

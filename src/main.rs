@@ -1,5 +1,3 @@
-#[macro_use] extern crate itertools;
-
 use ray_tracing::utils;
 use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
@@ -9,6 +7,8 @@ use utils::camera::Camera;
 
 use indicatif::ProgressStyle;
 use indicatif::ProgressBar;
+
+use itertools::iproduct;
 
 fn ray_color(mut ray: Ray) -> RGBTriplet {
     let unit_direction = ray.direction.unit();
