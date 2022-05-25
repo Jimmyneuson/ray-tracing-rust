@@ -29,7 +29,7 @@ fn main() {
     let bar = ProgressBar::new(image_width * image_height);
     bar.set_draw_delta((image_width * image_height) / 100);
     bar.set_style(ProgressStyle::default_bar()
-        .template("LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}"));
+       .template("LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}"));
 
     let mut ppm = PPM::new(image_width, image_height);
 

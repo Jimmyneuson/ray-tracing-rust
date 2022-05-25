@@ -1,3 +1,5 @@
+#[allow(unused_imports)]
+
 use itertools::iproduct;
 
 pub struct PPM {
