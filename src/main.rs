@@ -1,9 +1,10 @@
 use ray_tracing::utils;
+use utils::math;
 
 use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
-use utils::vector3::Vector3;
-use utils::ray::Ray;
+use math::vector3::Vector3;
+use math::ray::Ray;
 use utils::camera::Camera;
 
 use indicatif::ProgressStyle;

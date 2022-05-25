@@ -1,10 +1,11 @@
 use ray_tracing::utils;
+use utils::math;
 
-use utils::vector3::Vector3;
 use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
 use utils::camera::Camera;
-use utils::ray::Ray;
+use math::vector3::Vector3;
+use math::ray::Ray;
 
 use std::fs::read_to_string;
 
