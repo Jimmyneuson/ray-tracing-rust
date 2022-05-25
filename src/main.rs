@@ -1,10 +1,11 @@
 use ray_tracing::utils;
-use utils::math;
+use ray_tracing::math;
 
 use utils::ppm::PPM;
 use utils::ppm::RGBTriplet;
 use math::vector3::Vector3;
 use math::ray::Ray;
+use utils::sphere::Sphere;
 use utils::camera::Camera;
 
 use indicatif::ProgressStyle;
@@ -13,9 +14,14 @@ use indicatif::ProgressBar;
 use itertools::iproduct;
 
 fn ray_color(mut ray: Ray) -> RGBTriplet {
+    let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
+    if sphere.hit(&ray) {
+        return RGBTriplet::new(255, 0, 0);
+    }
+
     let unit_direction = ray.direction.unit();
     let t = 0.5 * (unit_direction.y + 1.0);
-    let v = Vector3::lerp(&Vector3::new(1.0, 1.0, 1.0), 
+    let v = Vector3::lerp(&Vector3::new(1.0, 1.0, 1.0),
                           &Vector3::new(0.5, 0.7, 1.0), t).color();
     RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8)
 }

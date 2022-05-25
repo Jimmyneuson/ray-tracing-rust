@@ -1,4 +1,4 @@
-use super::math::vector3::Vector3;
+use super::super::math::vector3::Vector3;
 
 pub struct Camera {
     pub viewport_height: f64, 
