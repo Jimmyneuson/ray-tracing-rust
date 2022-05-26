@@ -1,5 +1,4 @@
 #[allow(unused_imports)]
-
 use itertools::iproduct;
 
 pub struct PPM {
@@ -19,7 +18,7 @@ impl PPM {
             pixels: vec![RGBTriplet::default(); columns * rows],
         }
     }
-    
+
     pub fn set(&mut self, column: u64, row: u64, new: RGBTriplet) -> RGBTriplet {
         let column = column as usize;
         let row = row as usize;
@@ -35,12 +34,18 @@ impl PPM {
 
 impl std::fmt::Debug for PPM {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let pixel_format: String = self.pixels
-                                       .iter()
-                                       .map(|pixel| pixel.to_string() + "\n")
-                                       .collect();
-        write!(f, "P3\n{} {}\n255\n{}", self.columns, self.rows, pixel_format)
-    } 
+        let pixel_format: String = self
+            .pixels
+            .iter()
+            .map(|pixel| pixel.to_string() + "\n")
+            .collect();
+
+        write!(
+            f,
+            "P3\n{} {}\n255\n{}",
+            self.columns, self.rows, pixel_format
+        )
+    }
 }
 
 impl ToString for PPM {
@@ -52,27 +57,27 @@ impl ToString for PPM {
 #[derive(Copy, Clone)]
 pub struct RGBTriplet {
     r: u8,
-    g: u8, 
+    g: u8,
     b: u8,
 }
 
 impl RGBTriplet {
     pub fn new(r: u8, g: u8, b: u8) -> Self {
         Self { r, g, b }
-    } 
+    }
 }
 
 impl ToString for RGBTriplet {
     fn to_string(&self) -> String {
         format!("{} {} {}", self.r, self.g, self.b)
-    }    
+    }
 }
 
 impl Default for RGBTriplet {
     fn default() -> Self {
-        Self { 
-            r: 255, 
-            g: 255, 
+        Self {
+            r: 255,
+            g: 255,
             b: 255,
         }
     }
@@ -91,15 +96,19 @@ mod tests {
 
     #[test]
     fn gradient() {
-        let mut ppm = PPM::new(256, 256);    
+        let mut ppm = PPM::new(256, 256);
         let cmp = read_to_string("./tests/gradient.ppm").unwrap();
 
         for (j, i) in iproduct!((0..256).rev(), 0..256) {
-                ppm.set(i, 256 - j - 1, RGBTriplet::new(
+            ppm.set(
+                i,
+                256 - j - 1,
+                RGBTriplet::new(
                     ((i as f64 / 255.0) * 255.999) as u8,
                     ((j as f64 / 255.0) * 255.999) as u8,
                     (0.25 * 255.999) as u8,
-                ));
+                ),
+            );
         }
 
         assert_eq!(ppm.to_string(), cmp);

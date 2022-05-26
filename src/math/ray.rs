@@ -21,10 +21,7 @@ mod tests {
 
     #[test]
     fn ray_at() {
-        let r = Ray::new(
-            Vector3::new(0.0, 0.0, 0.0),
-            Vector3::new(1.0, 1.0, 1.0),
-        );
+        let r = Ray::new(Vector3::new(0.0, 0.0, 0.0), Vector3::new(1.0, 1.0, 1.0));
 
         assert_eq!(r.at(0.5), Vector3::new(0.5, 0.5, 0.5));
     }
