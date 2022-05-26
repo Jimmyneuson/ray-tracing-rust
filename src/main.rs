@@ -15,8 +15,11 @@ use itertools::iproduct;
 
 fn ray_color(mut ray: Ray) -> RGBTriplet {
     let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
-    if sphere.hit(&ray) {
-        return RGBTriplet::new(255, 0, 0);
+    let t = sphere.hit(&ray);
+    if t > 0.0 {
+        let n = (ray.at(t) - Vector3::new(0.0, 0.0, -1.0)).unit();
+        let v = 0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
+        return RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8)
     }
 
     let unit_direction = ray.direction.unit();
