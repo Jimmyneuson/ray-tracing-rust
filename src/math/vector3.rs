@@ -225,9 +225,6 @@ mod tests {
     fn vector_lerp_three_quarters() {
         let v1 = Vector3::new(0.0, 0.0, 0.0);
         let v2 = Vector3::new(1.0, 1.0, 1.0);
-        assert_eq!(
-            Vector3::lerp(v1, v2, 0.75),
-            Vector3::new(0.75, 0.75, 0.75)
-        );
+        assert_eq!(Vector3::lerp(v1, v2, 0.75), Vector3::new(0.75, 0.75, 0.75));
     }
 }
