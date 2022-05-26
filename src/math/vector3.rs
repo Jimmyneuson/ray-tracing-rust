@@ -16,7 +16,7 @@ impl Vector3 {
         (self.x.powi(2) + self.y.powi(2) + self.z.powi(2)).sqrt()
     }
 
-    pub fn dot(&self, other: &Vector3) -> f64 {
+    pub fn dot(&self, other: Vector3) -> f64 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
@@ -179,7 +179,7 @@ mod tests {
     fn dot_vector() {
         let v1 = Vector3::new(1.0, 2.0, 3.0);
         let v2 = Vector3::new(1.0, 2.0, 3.0);
-        assert_eq!(v1.dot(&v2), 14.0);
+        assert_eq!(v1.dot(v2), 14.0);
     }
 
     #[test]

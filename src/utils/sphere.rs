@@ -13,15 +13,15 @@ impl Sphere {
 
     pub fn hit(&self, ray: &Ray) -> f64 {
         let offset_center = ray.origin - self.position;
-        let a = ray.direction.dot(&ray.direction);
-        let b = 2.0 * offset_center.dot(&ray.direction);
-        let c = offset_center.dot(&offset_center) - self.radius * self.radius;
-        let discriminant = b * b - 4.0 * a * c;
+        let a = ray.direction.magnitude().powi(2);
+        let half_b = offset_center.dot(ray.direction);
+        let c = offset_center.magnitude().powi(2) - self.radius.powi(2);
+        let discriminant = half_b.powi(2) - a * c;
 
         if discriminant < 0.0 {
             -1.0
         } else {
-            (-b - discriminant.sqrt()) / (2.0 * a)
+            (-half_b - discriminant.sqrt()) / a
         }
     }
 }
