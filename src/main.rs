@@ -68,5 +68,5 @@ fn main() {
     }
     bar.finish();
 
-    println!("{:?}", ppm);
+    print!("{:?}", ppm);
 }
