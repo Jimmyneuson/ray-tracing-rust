@@ -1,6 +1,8 @@
 #[allow(unused_imports)]
 use itertools::iproduct;
 
+use crate::math::vector3::Vector3;
+
 pub struct PPM {
     columns: usize,
     rows: usize,
@@ -64,6 +66,14 @@ pub struct RGBTriplet {
 impl RGBTriplet {
     pub fn new(r: u8, g: u8, b: u8) -> Self {
         Self { r, g, b }
+    }
+
+    pub fn from_vector3(vector: Vector3) -> Self {
+        Self {
+            r: vector.x as u8,
+            g: vector.y as u8,
+            b: vector.z as u8,
+        }
     }
 }
 

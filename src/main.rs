@@ -19,13 +19,13 @@ fn ray_color(mut ray: Ray) -> RGBTriplet {
     if t > 0.0 {
         let n = (ray.at(t) - Vector3::new(0.0, 0.0, -1.0)).unit();
         let v = 0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
-        return RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8);
+        return RGBTriplet::from_vector3(v);
     }
 
     let unit_direction = ray.direction.unit();
     let t = 0.5 * (unit_direction.y + 1.0);
     let v = Vector3::lerp(Vector3::new(1.0, 1.0, 1.0), Vector3::new(0.5, 0.7, 1.0), t).color();
-    RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8)
+    RGBTriplet::from_vector3(v)
 }
 
 fn main() {

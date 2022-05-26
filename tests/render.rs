@@ -46,7 +46,7 @@ fn sky() {
         ppm.set(
             i,
             image_height - j - 1,
-            RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8),
+            RGBTriplet::from_vector3(v),
         );
     }
 
@@ -91,7 +91,7 @@ fn sphere() {
             ppm.set(
                 i,
                 image_height - j - 1,
-                RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8),
+                RGBTriplet::from_vector3(v),
             );
         }
     }
@@ -134,7 +134,7 @@ fn normal_sphere() {
             ppm.set(
                 i,
                 image_height - j - 1,
-                RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8),
+                RGBTriplet::from_vector3(v),
             );
         } else {
             let unit_direction = r.direction.unit();
@@ -145,7 +145,7 @@ fn normal_sphere() {
             ppm.set(
                 i,
                 image_height - j - 1,
-                RGBTriplet::new(v.x as u8, v.y as u8, v.z as u8),
+                RGBTriplet::from_vector3(v),
             );
         }
     }
