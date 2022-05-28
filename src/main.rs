@@ -1,17 +1,14 @@
-use ray_tracing::math;
-use ray_tracing::utils;
-
+use indicatif::ProgressBar;
+use indicatif::ProgressStyle;
+use itertools::iproduct;
 use math::ray::Ray;
 use math::vector3::Vector3;
+use ray_tracing::math;
+use ray_tracing::utils;
 use utils::camera::Camera;
 use utils::ppm::RGBTriplet;
 use utils::ppm::PPM;
 use utils::sphere::Sphere;
-
-use indicatif::ProgressBar;
-use indicatif::ProgressStyle;
-
-use itertools::iproduct;
 
 fn ray_color(mut ray: Ray) -> RGBTriplet {
     let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
