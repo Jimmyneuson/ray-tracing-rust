@@ -109,7 +109,11 @@ impl ops::Mul<Vector3> for f64 {
     type Output = Vector3;
 
     fn mul(self, vector: Vector3) -> Vector3 {
-        Vector3::new(vector.x * self, vector.y * self, vector.z * self)
+        Vector3::new(
+            vector.x * self,
+            vector.y * self,
+            vector.z * self,
+        )
     }
 }
 
@@ -127,7 +131,11 @@ impl ops::Div<f64> for Vector3 {
 
 impl std::fmt::Debug for Vector3 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{} {} {}", self.x, self.y, self.z)
+        write!(
+            f,
+            "{} {} {}",
+            self.x, self.y, self.z
+        )
     }
 }
 
@@ -145,7 +153,10 @@ mod tests {
     fn add_vector() {
         let v1 = Vector3::new(1.0, 1.0, 1.0);
         let v2 = Vector3::new(2.0, 2.0, 2.0);
-        assert_eq!(v1 + v2, Vector3::new(3.0, 3.0, 3.0));
+        assert_eq!(
+            v1 + v2,
+            Vector3::new(3.0, 3.0, 3.0)
+        );
     }
 
     #[test]
@@ -186,13 +197,19 @@ mod tests {
     fn cross_vector() {
         let mut v1 = Vector3::new(1.0, 2.0, 3.0);
         let v2 = Vector3::new(1.0, 4.0, 1.0);
-        assert_eq!(v1.cross(v2), Vector3::new(-10.0, 2.0, 2.0));
+        assert_eq!(
+            v1.cross(v2),
+            Vector3::new(-10.0, 2.0, 2.0)
+        );
     }
 
     #[test]
     fn cross_vector_with_itself() {
         let mut v1 = Vector3::new(1.0, 2.0, 3.0);
-        assert_eq!(v1.cross(v1), Vector3::new(0.0, 0.0, 0.0));
+        assert_eq!(
+            v1.cross(v1),
+            Vector3::new(0.0, 0.0, 0.0)
+        );
     }
 
     #[test]

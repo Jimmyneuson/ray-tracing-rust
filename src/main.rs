@@ -1,6 +1,5 @@
 use indicatif::ProgressBar;
 use indicatif::ProgressStyle;
-use itertools::iproduct;
 
 use math::ray::Ray;
 use math::vector3::Vector3;
@@ -42,9 +41,11 @@ fn main() {
     // Set up
     let bar = ProgressBar::new(image_width * image_height);
     bar.set_draw_delta((image_width * image_height) / 100);
-    bar.set_style(ProgressStyle::default_bar().template(
-        "LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}",
-    ));
+    bar.set_style(
+        ProgressStyle::default_bar().template(
+            "LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}",
+        ),
+    );
 
     let mut ppm = PPM::new(image_width, image_height);
 
@@ -61,19 +62,28 @@ fn main() {
         - camera.vertical / 2.0
         - Vector3::new(0.0, 0.0, camera.focal_length);
 
-    for (j, i) in iproduct!((0..image_height).rev(), 0..image_width) {
-        bar.inc(1);
+    for j in (0..image_height).rev() {
+        for i in 0..image_width {
+            bar.inc(1);
 
-        let u = i as f64 / (image_width - 1) as f64;
-        let v = j as f64 / (image_height - 1) as f64;
-        let r = Ray::new(
-            camera.position,
-            lower_left_corner + u * camera.horizontal + v * camera.vertical
-                - camera.position,
-        );
+            let u = i as f64 / (image_width - 1) as f64;
+            let v = j as f64 / (image_height - 1) as f64;
+            let r = Ray::new(
+                camera.position,
+                lower_left_corner
+                    + u * camera.horizontal
+                    + v * camera.vertical
+                    - camera.position,
+            );
 
-        ppm.set(i, image_height - j - 1, ray_color(r));
+            ppm.set(
+                i,
+                image_height - j - 1,
+                ray_color(r),
+            );
+        }
     }
+
     bar.finish();
 
     print!("{:?}", ppm);

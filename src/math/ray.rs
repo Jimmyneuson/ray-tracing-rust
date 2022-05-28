@@ -26,6 +26,9 @@ mod tests {
             Vector3::new(1.0, 1.0, 1.0),
         );
 
-        assert_eq!(r.at(0.5), Vector3::new(0.5, 0.5, 0.5));
+        assert_eq!(
+            r.at(0.5),
+            Vector3::new(0.5, 0.5, 0.5)
+        );
     }
 }
