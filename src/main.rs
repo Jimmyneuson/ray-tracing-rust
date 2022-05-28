@@ -15,13 +15,19 @@ fn ray_color(mut ray: Ray) -> RGBTriplet {
     let t = sphere.hit(&ray);
     if t > 0.0 {
         let n = (ray.at(t) - Vector3::new(0.0, 0.0, -1.0)).unit();
-        let v = 0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
+        let v = 0.5
+            * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
         return RGBTriplet::from_vector3(v);
     }
 
     let unit_direction = ray.direction.unit();
     let t = 0.5 * (unit_direction.y + 1.0);
-    let v = Vector3::lerp(Vector3::new(1.0, 1.0, 1.0), Vector3::new(0.5, 0.7, 1.0), t).color();
+    let v = Vector3::lerp(
+        Vector3::new(1.0, 1.0, 1.0),
+        Vector3::new(0.5, 0.7, 1.0),
+        t,
+    )
+    .color();
     RGBTriplet::from_vector3(v)
 }
 
@@ -34,15 +40,19 @@ fn main() {
     // Set up
     let bar = ProgressBar::new(image_width * image_height);
     bar.set_draw_delta((image_width * image_height) / 100);
-    bar.set_style(
-        ProgressStyle::default_bar()
-            .template("LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}"),
-    );
+    bar.set_style(ProgressStyle::default_bar().template(
+        "LOADING PPM: {percent}% {bar:40.cyan/blue} {pos:>7}/{len:7}",
+    ));
 
     let mut ppm = PPM::new(image_width, image_height);
 
     // Camera
-    let camera = Camera::new(2.0, aspect_ratio * 2.0, 1.0, Vector3::new(0.0, 0.0, 0.0));
+    let camera = Camera::new(
+        2.0,
+        aspect_ratio * 2.0,
+        1.0,
+        Vector3::new(0.0, 0.0, 0.0),
+    );
 
     let lower_left_corner = camera.position
         - camera.horizontal / 2.0
@@ -56,7 +66,10 @@ fn main() {
         let v = j as f64 / (image_height - 1) as f64;
         let r = Ray::new(
             camera.position,
-            lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.position,
+            lower_left_corner
+                + u * camera.horizontal
+                + v * camera.vertical
+                - camera.position,
         );
 
         ppm.set(i, image_height - j - 1, ray_color(r));

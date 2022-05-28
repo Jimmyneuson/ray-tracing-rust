@@ -109,7 +109,11 @@ impl ops::Mul<Vector3> for f64 {
     type Output = Vector3;
 
     fn mul(self, vector: Vector3) -> Vector3 {
-        Vector3::new(vector.x * self, vector.y * self, vector.z * self)
+        Vector3::new(
+            vector.x * self,
+            vector.y * self,
+            vector.z * self,
+        )
     }
 }
 
@@ -126,7 +130,10 @@ impl ops::Div<f64> for Vector3 {
 }
 
 impl std::fmt::Debug for Vector3 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(
+        &self,
+        f: &mut std::fmt::Formatter<'_>,
+    ) -> std::fmt::Result {
         write!(f, "{} {} {}", self.x, self.y, self.z)
     }
 }
@@ -218,13 +225,19 @@ mod tests {
     fn vector_lerp_half() {
         let v1 = Vector3::new(0.0, 0.0, 0.0);
         let v2 = Vector3::new(1.0, 1.0, 1.0);
-        assert_eq!(Vector3::lerp(v1, v2, 0.5), Vector3::new(0.5, 0.5, 0.5));
+        assert_eq!(
+            Vector3::lerp(v1, v2, 0.5),
+            Vector3::new(0.5, 0.5, 0.5)
+        );
     }
 
     #[test]
     fn vector_lerp_three_quarters() {
         let v1 = Vector3::new(0.0, 0.0, 0.0);
         let v2 = Vector3::new(1.0, 1.0, 1.0);
-        assert_eq!(Vector3::lerp(v1, v2, 0.75), Vector3::new(0.75, 0.75, 0.75));
+        assert_eq!(
+            Vector3::lerp(v1, v2, 0.75),
+            Vector3::new(0.75, 0.75, 0.75)
+        );
     }
 }
