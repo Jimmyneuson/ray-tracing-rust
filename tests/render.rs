@@ -1,17 +1,14 @@
+use itertools::iproduct;
+
+use math::ray::Ray;
+use math::vector3::Vector3;
 use ray_tracing::math;
 use ray_tracing::utils;
-
+use std::fs::read_to_string;
 use utils::camera::Camera;
 use utils::ppm::RGBTriplet;
 use utils::ppm::PPM;
 use utils::sphere::Sphere;
-
-use math::ray::Ray;
-use math::vector3::Vector3;
-
-use std::fs::read_to_string;
-
-use itertools::iproduct;
 
 #[test]
 fn sky() {
@@ -36,12 +33,18 @@ fn sky() {
         let v = j as f64 / (image_height - 1) as f64;
         let mut r = Ray::new(
             camera.position,
-            lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.position,
+            lower_left_corner + u * camera.horizontal + v * camera.vertical
+                - camera.position,
         );
 
         let unit_direction = r.direction.unit();
         let t = 0.5 * (unit_direction.y + 1.0);
-        let v = Vector3::lerp(Vector3::new(1.0, 1.0, 1.0), Vector3::new(0.5, 0.7, 1.0), t).color();
+        let v = Vector3::lerp(
+            Vector3::new(1.0, 1.0, 1.0),
+            Vector3::new(0.5, 0.7, 1.0),
+            t,
+        )
+        .color();
 
         ppm.set(
             i,
@@ -76,17 +79,26 @@ fn sphere() {
         let v = j as f64 / (image_height - 1) as f64;
         let mut r = Ray::new(
             camera.position,
-            lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.position,
+            lower_left_corner + u * camera.horizontal + v * camera.vertical
+                - camera.position,
         );
 
         let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
         if sphere.hit(&r) > 0.0 {
-            ppm.set(i, image_height - j - 1, RGBTriplet::new(255, 0, 0));
+            ppm.set(
+                i,
+                image_height - j - 1,
+                RGBTriplet::new(255, 0, 0),
+            );
         } else {
             let unit_direction = r.direction.unit();
             let t = 0.5 * (unit_direction.y + 1.0);
-            let v =
-                Vector3::lerp(Vector3::new(1.0, 1.0, 1.0), Vector3::new(0.5, 0.7, 1.0), t).color();
+            let v = Vector3::lerp(
+                Vector3::new(1.0, 1.0, 1.0),
+                Vector3::new(0.5, 0.7, 1.0),
+                t,
+            )
+            .color();
 
             ppm.set(
                 i,
@@ -122,7 +134,8 @@ fn normal_sphere() {
         let v = j as f64 / (image_height - 1) as f64;
         let mut r = Ray::new(
             camera.position,
-            lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.position,
+            lower_left_corner + u * camera.horizontal + v * camera.vertical
+                - camera.position,
         );
 
         let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
@@ -130,7 +143,8 @@ fn normal_sphere() {
 
         if t > 0.0 {
             let n = (r.at(t) - sphere.position).unit();
-            let v = 0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
+            let v =
+                0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
             ppm.set(
                 i,
                 image_height - j - 1,
@@ -139,8 +153,12 @@ fn normal_sphere() {
         } else {
             let unit_direction = r.direction.unit();
             let t = 0.5 * (unit_direction.y + 1.0);
-            let v =
-                Vector3::lerp(Vector3::new(1.0, 1.0, 1.0), Vector3::new(0.5, 0.7, 1.0), t).color();
+            let v = Vector3::lerp(
+                Vector3::new(1.0, 1.0, 1.0),
+                Vector3::new(0.5, 0.7, 1.0),
+                t,
+            )
+            .color();
 
             ppm.set(
                 i,

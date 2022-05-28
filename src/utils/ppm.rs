@@ -34,20 +34,13 @@ impl PPM {
         new
     }
 
-    pub fn get(
-        &self,
-        column: usize,
-        row: usize,
-    ) -> Option<&RGBTriplet> {
+    pub fn get(&self, column: usize, row: usize) -> Option<&RGBTriplet> {
         self.pixels.get(self.columns * row + column)
     }
 }
 
 impl std::fmt::Debug for PPM {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let pixel_format: String = self
             .pixels
             .iter()
@@ -106,18 +99,16 @@ impl Default for RGBTriplet {
 }
 
 impl std::fmt::Debug for RGBTriplet {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} {} {}", self.r, self.g, self.b)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use std::fs::read_to_string;
+
+    use super::*;
 
     #[test]
     fn gradient() {

@@ -15,8 +15,7 @@ impl Sphere {
         let offset_center = ray.origin - self.position;
         let a = ray.direction.magnitude().powi(2);
         let half_b = offset_center.dot(ray.direction);
-        let c =
-            offset_center.magnitude().powi(2) - self.radius.powi(2);
+        let c = offset_center.magnitude().powi(2) - self.radius.powi(2);
         let discriminant = half_b.powi(2) - a * c;
 
         if discriminant < 0.0 {

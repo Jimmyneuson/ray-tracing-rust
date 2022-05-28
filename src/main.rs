@@ -1,6 +1,7 @@
 use indicatif::ProgressBar;
 use indicatif::ProgressStyle;
 use itertools::iproduct;
+
 use math::ray::Ray;
 use math::vector3::Vector3;
 use ray_tracing::math;
@@ -13,10 +14,10 @@ use utils::sphere::Sphere;
 fn ray_color(mut ray: Ray) -> RGBTriplet {
     let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
     let t = sphere.hit(&ray);
+
     if t > 0.0 {
         let n = (ray.at(t) - Vector3::new(0.0, 0.0, -1.0)).unit();
-        let v = 0.5
-            * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
+        let v = 0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
         return RGBTriplet::from_vector3(v);
     }
 
@@ -28,6 +29,7 @@ fn ray_color(mut ray: Ray) -> RGBTriplet {
         t,
     )
     .color();
+
     RGBTriplet::from_vector3(v)
 }
 
@@ -66,9 +68,7 @@ fn main() {
         let v = j as f64 / (image_height - 1) as f64;
         let r = Ray::new(
             camera.position,
-            lower_left_corner
-                + u * camera.horizontal
-                + v * camera.vertical
+            lower_left_corner + u * camera.horizontal + v * camera.vertical
                 - camera.position,
         );
 

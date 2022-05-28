@@ -109,11 +109,7 @@ impl ops::Mul<Vector3> for f64 {
     type Output = Vector3;
 
     fn mul(self, vector: Vector3) -> Vector3 {
-        Vector3::new(
-            vector.x * self,
-            vector.y * self,
-            vector.z * self,
-        )
+        Vector3::new(vector.x * self, vector.y * self, vector.z * self)
     }
 }
 
@@ -130,10 +126,7 @@ impl ops::Div<f64> for Vector3 {
 }
 
 impl std::fmt::Debug for Vector3 {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} {} {}", self.x, self.y, self.z)
     }
 }
