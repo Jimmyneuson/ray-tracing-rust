@@ -3,6 +3,7 @@ pub mod utils {
     pub mod hittable;
     pub mod ppm;
     pub mod sphere;
+    pub mod world;
 }
 
 pub mod math {

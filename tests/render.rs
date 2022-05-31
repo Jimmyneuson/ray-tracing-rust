@@ -5,10 +5,10 @@ use ray_tracing::utils;
 use std::fs::read_to_string;
 use utils::camera::Camera;
 use utils::hittable::*;
-use utils::hittable::*;
 use utils::ppm::RGBTriplet;
 use utils::ppm::PPM;
 use utils::sphere::Sphere;
+use utils::world::World;
 
 #[test]
 fn sky() {
@@ -100,7 +100,7 @@ fn sphere() {
                     - camera.position,
             );
 
-            let mut world = HittableList::default();
+            let mut world = World::default();
             world.add(Box::new(Sphere::new(
                 Vector3::new(0.0, 0.0, -1.0),
                 0.5,
@@ -169,7 +169,7 @@ fn normal_sphere() {
                     - camera.position,
             );
 
-            let mut world = HittableList::default();
+            let mut world = World::default();
             world.add(Box::new(Sphere::new(
                 Vector3::new(0.0, 0.0, -1.0),
                 0.5,

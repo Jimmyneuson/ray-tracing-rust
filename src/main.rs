@@ -10,8 +10,9 @@ use utils::hittable::*;
 use utils::ppm::RGBTriplet;
 use utils::ppm::PPM;
 use utils::sphere::Sphere;
+use utils::world::World;
 
-fn ray_color(mut ray: Ray, world: &HittableList) -> RGBTriplet {
+fn ray_color(mut ray: Ray, world: &World) -> RGBTriplet {
     if let Some(hit) = world.hit(&ray, 0.0..=f64::MAX) {
         return RGBTriplet::from_vector3(
             (hit.normal + Vector3::new(1.0, 1.0, 1.0)).color() * 0.5,
@@ -48,7 +49,7 @@ fn main() {
     let mut ppm = PPM::new(image_width, image_height);
 
     // World
-    let mut world = HittableList::default();
+    let mut world = World::default();
     world.add(Box::new(Sphere::new(
         Vector3::new(0.0, 0.0, -1.0),
         0.5,

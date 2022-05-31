@@ -22,35 +22,3 @@ impl Hit {
 pub trait Hittable {
     fn hit(&self, ray: &Ray, valid_range: RangeInclusive<f64>) -> Option<Hit>;
 }
-
-#[derive(Default)]
-pub struct HittableList {
-    objects: Vec<Box<dyn Hittable>>,
-}
-
-impl HittableList {
-    pub fn add(&mut self, object: Box<dyn Hittable>) {
-        self.objects.push(object);
-    }
-
-    pub fn clear(&mut self) {
-        self.objects.clear();
-    }
-}
-
-impl Hittable for HittableList {
-    fn hit(&self, ray: &Ray, valid_range: RangeInclusive<f64>) -> Option<Hit> {
-        let mut closest = *valid_range.end();
-        let mut hit_anything = None;
-
-        for object in self.objects.iter() {
-            if let Some(hit) = object.hit(ray, *valid_range.start()..=closest)
-            {
-                closest = hit.t;
-                hit_anything = Some(hit);
-            }
-        }
-
-        hit_anything
-    }
-}
