@@ -4,6 +4,7 @@ use super::hittable::*;
 use crate::math::ray::Ray;
 
 #[derive(Default)]
+/// Holds the objects in a world.
 pub struct World {
     objects: Vec<Box<dyn Hittable>>,
 }
@@ -19,6 +20,7 @@ impl World {
 }
 
 impl Hittable for World {
+    /// Loops through the world's objects and returns the closest `Hit`.
     fn hit(&self, ray: &Ray, valid_range: RangeInclusive<f64>) -> Option<Hit> {
         let mut closest = *valid_range.end();
         let mut hit_anything = None;

@@ -1,5 +1,6 @@
 use crate::math::vector3::Vector3;
 
+/// Encodes a PPM file
 pub struct PPM {
     columns: usize,
     rows: usize,
@@ -7,6 +8,7 @@ pub struct PPM {
 }
 
 impl PPM {
+    /// Creates a blank black PPM with the specified `width` and `height`.
     pub fn new(columns: u64, rows: u64) -> Self {
         let columns = columns as usize;
         let rows = rows as usize;
@@ -18,6 +20,7 @@ impl PPM {
         }
     }
 
+    /// Sets the specified pixel in the `PPM` object with an `RGBTriplet`.
     pub fn set(
         &mut self,
         column: u64,
@@ -31,12 +34,14 @@ impl PPM {
         new
     }
 
+    /// Gets the `RGBTriplet` at the specified `column` and `row`.
     pub fn get(&self, column: usize, row: usize) -> Option<&RGBTriplet> {
         self.pixels.get(self.columns * row + column)
     }
 }
 
 impl std::fmt::Debug for PPM {
+    /// Prints the PPM as it's file format
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let pixel_format: String = self
             .pixels
@@ -65,6 +70,7 @@ pub struct RGBTriplet {
     b: u8,
 }
 
+/// Holds the red, green, and blue values of an RGB triplet.
 impl RGBTriplet {
     pub fn new(r: u8, g: u8, b: u8) -> Self {
         Self { r, g, b }

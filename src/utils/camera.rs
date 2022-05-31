@@ -1,5 +1,6 @@
 use crate::math::vector3::Vector3;
 
+/// Stores data for the camera
 pub struct Camera {
     pub viewport_height: f64,
     pub viewport_width: f64,
