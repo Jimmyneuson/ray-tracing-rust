@@ -4,6 +4,8 @@ use ray_tracing::math;
 use ray_tracing::utils;
 use std::fs::read_to_string;
 use utils::camera::Camera;
+use utils::hittable::*;
+use utils::hittable::*;
 use utils::ppm::RGBTriplet;
 use utils::ppm::PPM;
 use utils::sphere::Sphere;
@@ -98,8 +100,13 @@ fn sphere() {
                     - camera.position,
             );
 
-            let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
-            if sphere.hit(&r) > 0.0 {
+            let mut world = HittableList::default();
+            world.add(Box::new(Sphere::new(
+                Vector3::new(0.0, 0.0, -1.0),
+                0.5,
+            )));
+
+            if let Some(_) = world.hit(&r, 0.0..=f64::MAX) {
                 ppm.set(
                     i,
                     image_height - j - 1,
@@ -162,13 +169,15 @@ fn normal_sphere() {
                     - camera.position,
             );
 
-            let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
-            let t = sphere.hit(&r);
+            let mut world = HittableList::default();
+            world.add(Box::new(Sphere::new(
+                Vector3::new(0.0, 0.0, -1.0),
+                0.5,
+            )));
 
-            if t > 0.0 {
-                let n = (r.at(t) - sphere.position).unit();
-                let v = 0.5
-                    * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
+            if let Some(hit) = world.hit(&r, 0.0..=f64::MAX) {
+                let v =
+                    0.5 * (hit.normal + Vector3::new(1.0, 1.0, 1.0)).color();
                 ppm.set(
                     i,
                     image_height - j - 1,

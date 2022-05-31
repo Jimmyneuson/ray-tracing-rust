@@ -6,18 +6,16 @@ use math::vector3::Vector3;
 use ray_tracing::math;
 use ray_tracing::utils;
 use utils::camera::Camera;
+use utils::hittable::*;
 use utils::ppm::RGBTriplet;
 use utils::ppm::PPM;
 use utils::sphere::Sphere;
 
-fn ray_color(mut ray: Ray) -> RGBTriplet {
-    let sphere = Sphere::new(Vector3::new(0.0, 0.0, -1.0), 0.5);
-    let t = sphere.hit(&ray);
-
-    if t > 0.0 {
-        let n = (ray.at(t) - Vector3::new(0.0, 0.0, -1.0)).unit();
-        let v = 0.5 * Vector3::new(n.x + 1.0, n.y + 1.0, n.z + 1.0).color();
-        return RGBTriplet::from_vector3(v);
+fn ray_color(mut ray: Ray, world: &HittableList) -> RGBTriplet {
+    if let Some(hit) = world.hit(&ray, 0.0..=f64::MAX) {
+        return RGBTriplet::from_vector3(
+            (hit.normal + Vector3::new(1.0, 1.0, 1.0)).color() * 0.5,
+        );
     }
 
     let unit_direction = ray.direction.unit();
@@ -49,6 +47,17 @@ fn main() {
 
     let mut ppm = PPM::new(image_width, image_height);
 
+    // World
+    let mut world = HittableList::default();
+    world.add(Box::new(Sphere::new(
+        Vector3::new(0.0, 0.0, -1.0),
+        0.5,
+    )));
+    world.add(Box::new(Sphere::new(
+        Vector3::new(0.0, -100.5, -1.0),
+        100.0,
+    )));
+
     // Camera
     let camera = Camera::new(
         2.0,
@@ -79,7 +88,7 @@ fn main() {
             ppm.set(
                 i,
                 image_height - j - 1,
-                ray_color(r),
+                ray_color(r, &world),
             );
         }
     }
